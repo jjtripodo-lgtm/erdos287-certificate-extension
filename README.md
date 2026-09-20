@@ -18,6 +18,8 @@ Unsafe claim:
 #287 solved.
 ```
 
+The verifier proves the listed primality, extension inequalities, and numerical conversions. It assumes the public starting endpoint already has the required good-chain coverage, and does not reprove the framework transferring that coverage to counterexample bounds.
+
 ## Files
 
 - `certificate.json`: recursive Pocklington-style certificate data for the chain.
