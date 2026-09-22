@@ -43,9 +43,10 @@ def verify_prime_cert(n: int, certs: dict[str, dict], memo: dict[int, bool]) -> 
     if int(c["n"]) != n:
         raise ValueError(f"certificate key mismatch for {n}")
     if c.get("small", False):
-        ok = n <= SMALL_LIMIT and trial_prime(n)
-        memo[n] = ok
-        return ok
+        if n > SMALL_LIMIT or not trial_prime(n):
+            raise ValueError(f"small-prime certificate failed for n={n}")
+        memo[n] = True
+        return True
 
     factors = {int(p): int(e) for p, e in c["factors"].items()}
     prod = 1
