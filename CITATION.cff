@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use or discuss this certificate extension, please cite this repository version."
+title: "Erdős Problem #287: 60-step good-prime-chain certificate extension"
+authors:
+  - family-names: "Tripodo"
+    given-names: "John"
+type: software
+version: "1.0.0"
+repository-code: "https://github.com/jjtripodo-lgtm/erdos287-certificate-extension"
+url: "https://github.com/jjtripodo-lgtm/erdos287-certificate-extension"
+abstract: >-
+  A replayable 60-step extension of the public good-prime-chain certificate
+  framework for Erdős Problem #287. The bundle includes recursive
+  Pocklington-style primality certificates, a pure-Python verifier, negative
+  controls, exact expected output, and a checksum manifest. It is a finite
+  certificate contribution, not a proof of Erdős Problem #287.
+keywords:
+  - "Erdős Problem #287"
+  - "computational number theory"
+  - "primality certificate"
+  - "good-prime chain"
+  - "reproducible mathematics"
