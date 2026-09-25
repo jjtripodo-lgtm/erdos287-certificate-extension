@@ -1,0 +1,37 @@
+name: Verify certificate bundle
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Verify release hashes
+        run: sha256sum -c SHA256SUMS
+
+      - name: Run verifier regression tests
+        run: python -m unittest -v test_verify.py
+
+      - name: Replay published certificate
+        run: |
+          python verify.py certificate.json > actual_output.txt
+          diff -u expected_output.txt actual_output.txt
