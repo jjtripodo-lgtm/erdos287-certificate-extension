@@ -50,5 +50,24 @@ class CertificateVerifierTest(unittest.TestCase):
         cert["bases"][next(iter(cert["bases"]))] = "1"
         self.assertNotEqual(self.run_data(data).returncode, 0)
 
+
+    def test_rejects_zero_factor_exponent(self):
+        data = json.loads((ROOT / "certificate.json").read_text())
+        cert = data["certificates"][str(data["final_endpoint"])]
+        p = next(iter(cert["factors"]))
+        cert["factors"][p] = 0
+        result = self.run_data(data)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("nonpositive factor exponent", result.stderr)
+
+    def test_rejects_negative_factor_exponent(self):
+        data = json.loads((ROOT / "certificate.json").read_text())
+        cert = data["certificates"][str(data["final_endpoint"])]
+        p = next(iter(cert["factors"]))
+        cert["factors"][p] = -1
+        result = self.run_data(data)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("nonpositive factor exponent", result.stderr)
+
 if __name__ == "__main__":
     unittest.main()
