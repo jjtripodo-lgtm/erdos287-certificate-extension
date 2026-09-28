@@ -49,6 +49,10 @@ def verify_prime_cert(n: int, certs: dict[str, dict], memo: dict[int, bool]) -> 
         return True
 
     factors = {int(p): int(e) for p, e in c["factors"].items()}
+    if any(p < 2 for p in factors):
+        raise ValueError(f"invalid prime factor key for n={n}")
+    if any(e <= 0 for e in factors.values()):
+        raise ValueError(f"nonpositive factor exponent for n={n}")
     prod = 1
     for p, e in factors.items():
         prod *= p ** e
