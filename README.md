@@ -77,6 +77,8 @@ AI tools helped with repository packaging, verification workflow cleanup, and do
 
 A failed small-prime certificate now raises an error. Previously its Boolean failure could be ignored by the top-level chain loop; a forged 7 -> 9 step with q=4 was accepted. This was a verifier-input validation defect, not a failed check in the published 60-step certificate. The certificate bytes and expected successful output are unchanged. Run `python3 -m unittest test_verify.py` for the published certificate and negative controls.
 
+**Verifier hardening, 28 September 2026.** The verifier now also rejects nonpositive factor exponents (and factor keys below 2) before reconstructing `n-1`. This does not affect the published certificate, whose factor exponents are all positive; regression tests cover zero and negative exponents.
+
 ## Citation and archival provenance
 
 This repository now includes machine-readable citation metadata in
